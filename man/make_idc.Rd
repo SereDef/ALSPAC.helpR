@@ -4,12 +4,12 @@
 \alias{make_idc}
 \title{Make a unique child identifier}
 \usage{
-make_idc(mom.id = "cidb2957", sibling.id = "qlet", data = NULL)
+make_idc(mom.id = "cidb2957", parity = "qlet", data = NULL)
 }
 \arguments{
 \item{mom.id}{: The variable name of the (project specific) mother ID.}
 
-\item{sibling.id}{: (qlet) a two-level variable indicating parity (A or B).}
+\item{parity}{: (qlet) a two-level variable indicating parity (A or B).}
 
 \item{data}{: (NULL) allows to specify the name of the dataset if this is
 different than "data".}
