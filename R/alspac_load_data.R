@@ -14,8 +14,9 @@
 #' @export
 #'
 #' @examples load_alspac()
+#'\dontrun{
 #' @examples load_alspac('~/ALSPAC_data_folder/ProjectName_DateRelease.sav')
-#'
+#'}
 load_alspac <- function(filepath=NULL, lower.case=TRUE) {
   # File location
   if (is.null(filepath)) { filepath <- base::file.choose() }

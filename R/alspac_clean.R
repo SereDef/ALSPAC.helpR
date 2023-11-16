@@ -12,8 +12,9 @@
 #' 0 (for first born) or 1 (for second born)
 #' @export
 #'
-#' @examples data$IDC <- make_idc(mom.id='yikes123') # Assumes data is stored in a data.frame called "data"
-#' @examples data$IDC <- make_idc(mom.id='yikes123', data=alspac.data) # Specify the data.frame name yourself
+#' @examples data <- toy_data
+#' data$IDC <- make_idc(mom.id='id') # Assumes data is stored in a data.frame called "data"
+#' @examples data$IDC <- make_idc(mom.id='id', data=toy_data) # Specify the data.frame name yourself
 #'
 make_idc <- function(mom.id='cidb2957', parity='qlet', data=NULL) {
   # Check input
@@ -28,7 +29,7 @@ make_idc <- function(mom.id='cidb2957', parity='qlet', data=NULL) {
   }
   # Output: names in alphabetical order
   idc <- as.numeric(paste0(data[,mom.id], # mother ID
-                           ifelse(gsub('\\s+', '', data[,sibling.id])=='A', 0,1)))
+                           ifelse(gsub('\\s+', '', data[,parity])=='A', 0,1)))
 
   return(idc)
 }
@@ -43,8 +44,9 @@ make_idc <- function(mom.id='cidb2957', parity='qlet', data=NULL) {
 #' @return A factor with levels: 'male' and 'female'.
 #' @export
 #'
-#' @examples data$sex <- make_sex_factor() # Assumes data is stored in a data.frame called "data"
-#' @examples data$sex <- make_sex_factor(data=alspac.data) # Specify the data.frame name yourself
+#' @examples data <- toy_data
+#' data$sex <- make_sex_factor() # Assumes data is stored in a data.frame called "data"
+#' @examples data$sex <- make_sex_factor(data=toy_data) # Specify the data.frame name yourself
 #'
 make_sex_factor <- function(sex.var='kz021', data=NULL) {
   # Check input
@@ -93,9 +95,12 @@ make_sex_factor <- function(sex.var='kz021', data=NULL) {
 #' @return A dataframe where only one sibling is left for each pair.
 #' @export
 #'
-#' @examples data_nosibl <- rm_siblings(idc='IDC')
-#' @examples data_nosibl <- rm_siblings(idc='myID', data=myData)
-#' @examples data_nosibl <- rm_siblings(method='missing', column_selection=c('poteto','potato'))
+#' @examples
+#'\dontrun{
+#' data_nosibl <- rm_siblings(idc='IDC') # Assumes a dataset called "data"
+#' data_nosibl <- rm_siblings(idc='new_ID', data=toy_data)
+#' data_nosibl <- rm_siblings(method='missing', column_selection=c('poteto','potato'))
+#'}
 #'
 rm_siblings <- function(idc='idc', method = 'random', column_selection = 'all',
                         seed = 310896, mom.id='cidb2957', parity='qlet',
@@ -119,7 +124,7 @@ rm_siblings <- function(idc='idc', method = 'random', column_selection = 'all',
   } else if (!idc %in% names(data)) {
 
     message('"',idc,'" not found in data, creating child ID variable: "',idc,'".')
-    data[,idc] <- make_idc(mom.id=mom.id, sibling.id=sibling.id, data=data)
+    data[,idc] <- make_idc(mom.id=mom.id, parity=parity, data=data)
   }
 
   if (method=='parity') {
@@ -191,10 +196,13 @@ rm_siblings <- function(idc='idc', method = 'random', column_selection = 'all',
 #' @return The cleaned variable (with outlier values set to NA)
 #' @export
 #'
-#' @examples data$cheese_clean <- rm_outliers('cheese')
-#' @examples better_data$crackers_clean <- rm_outliers('crackers', data=better_data)
-#' @examples data$unicorn <- rm_outliers('horses', cutoff=5, verbose=FALSE)
-#'
+#' @examples toy_data$coolio <- rm_outliers('yikes123', data=toy_data)
+#' @examples
+#'\dontrun{
+#' data$cheese_clean <- rm_outliers('cheese')
+#' data$unicorn <- rm_outliers('horses', cutoff=5, verbose=FALSE)
+#' better_data$crackers_clean <- rm_outliers('crackers', data=better_data)
+#'}
 rm_outliers <- function(var, cutoff = 1.5, verbose=TRUE, data=NULL) {
 
     # Check input
@@ -214,7 +222,7 @@ rm_outliers <- function(var, cutoff = 1.5, verbose=TRUE, data=NULL) {
     }
 
   # Compute IQR
-  quants <- quantile(data[,var], probs=c(.25, .75), na.rm=TRUE)
+  quants <- stats::quantile(data[,var], probs=c(.25, .75), na.rm=TRUE)
   iqr <- quants[2] - quants[1]
 
   too_high <- which(data[,var] > quants[2] + cutoff*iqr)

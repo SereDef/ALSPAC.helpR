@@ -23,7 +23,8 @@ The ALSPAC datasets often lack a unique participant identifier. So let's make
 one using information about the mother and sibling status.
 }
 \examples{
-data$IDC <- make_idc(mom.id='yikes123') # Assumes data is stored in a data.frame called "data"
-data$IDC <- make_idc(mom.id='yikes123', data=alspac.data) # Specify the data.frame name yourself
+data <- toy_data
+data$IDC <- make_idc(mom.id='id') # Assumes data is stored in a data.frame called "data"
+data$IDC <- make_idc(mom.id='id', data=toy_data) # Specify the data.frame name yourself
 
 }

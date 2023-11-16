@@ -10,10 +10,9 @@
 #' @return Column names in `data` that contain `pref`.
 #' @export
 #'
-#' @examples f('f01') # Assumes data is stored in a data.frame called "data"
-#' @examples f('f01', alspac.data) # Specify the data.frame name yourself
+#' @examples find_alspac('f01', toy_data) # Specify the data.frame name yourself
 
-f <- function(pref, data=NULL) {
+find_alspac <- function(pref, data=NULL) {
   # Check input
   if (base::is.null(data) &
       !base::exists('data', where=base::globalenv(), mode='list', inherits=FALSE)) {
@@ -27,9 +26,15 @@ f <- function(pref, data=NULL) {
   # Output: names in alphabetical order
   var.names <- sort(names(data)[grep(pref, names(data))])
 
-  print(var.names)
   return(var.names)
 }
+
+#' @rdname find_alspac
+#' @examples f('f01', toy_data)
+#' @examples data <- toy_data
+#' f('f01') # Assumes data is stored in a data.frame called "data"
+#' @export
+f <- find_alspac
 
 # ------------------------------------------------------------------------------
 #' Quickly select groups of variables
@@ -46,10 +51,12 @@ f <- function(pref, data=NULL) {
 #' @return Vector of variable names that match the search.
 #' @export
 #'
-#' @examples sel('depre') # returns, for example c('depre_1','depre_2','depre_3','depresion_total')
-#' @examples sel('depre', times=c(1,3)) # returns, for example c('depre_1','depre_3')
-#'
-sel <- function(var.names, times=NULL, sep='_', data=NULL){
+#' @examples
+#'\dontrun{
+#' select_alspac('depre') # returns, for example c('depre_1','depre_2','depre_3','depresion_total')
+#' select_alspac('depre', times=c(1,3)) # returns, for example c('depre_1','depre_3')
+#'}
+select_alspac <- function(var.names, times=NULL, sep='_', data=NULL){
   # Check input
   if (base::is.null(data) &
       !base::exists('data', where=base::globalenv(), mode='list', inherits=FALSE)) {
@@ -61,9 +68,17 @@ sel <- function(var.names, times=NULL, sep='_', data=NULL){
     data <- get("data", envir = .GlobalEnv) # get `data` from global enviroment
   }
 
-  subs = names(data)[grep(paste(var, collapse='|'), names(data))]
+  subs = names(data)[grep(paste(var.names, collapse='|'), names(data))]
 
   if (!is.null(times)) { subs = subs[grep(paste(paste0(sep,times), collapse='|'), subs)] }
 
   return(subs)
 }
+
+#' @rdname select_alspac
+#' @examples
+#'\dontrun{
+#'sel('alcohol', times=c(18, 24.5)) # returns c('alcohol_18years','alcohol_24.5years')
+#'}
+#' @export
+sel <- select_alspac

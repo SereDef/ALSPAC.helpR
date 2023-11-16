@@ -47,8 +47,10 @@ and takes values: "random", "parity" and "missing" (see parameter description
 for more details).
 }
 \examples{
-data_nosibl <- rm_siblings(idc='IDC')
-data_nosibl <- rm_siblings(idc='myID', data=myData)
+\dontrun{
+data_nosibl <- rm_siblings(idc='IDC') # Assumes a dataset called "data"
+data_nosibl <- rm_siblings(idc='new_ID', data=toy_data)
 data_nosibl <- rm_siblings(method='missing', column_selection=c('poteto','potato'))
+}
 
 }

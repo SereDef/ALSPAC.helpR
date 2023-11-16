@@ -1,13 +1,17 @@
 Package: ALSPAC.helpR
-Title: A few helper functions to handle ALSPAC datasets.
+Title: A few helper functions to handle ALSPAC datasets
 Version: 0.0.0.9000
 Authors@R: 
     person("Serena", "Defina", , "sere.def@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-3344-6597"))
 Description: A few helper functions to load, handle and manipulate ALSPAC datasets.
-License: use_mit_license()
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Imports: 
-    foreign
+    foreign,
+    stats
+Depends: 
+    R (>= 2.10)
+LazyData: true

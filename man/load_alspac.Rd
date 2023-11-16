@@ -21,8 +21,3 @@ you can specify the file full path as a string.
 By default, the column names of the output data.frame are lower-cased to
 avoid confusion.
 }
-\examples{
-load_alspac()
-load_alspac('~/ALSPAC_data_folder/ProjectName_DateRelease.sav')
-
-}
