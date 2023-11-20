@@ -3,16 +3,22 @@
 #' ALSPAC data likely comes in large dataframes containing many columns.
 #' This function helps with quickly finding out which variables are present.
 #'
-#' @param pref : partial string to search for (understands regular expressions).
+#' @param s : partial string to search for (understands regular expressions).
 #' @param data : (NULL) allows to specify the name of the dataset if this is
 #' different than "data".
+#' @param method : ("contains") how to search: possible values: "starts", "ends","contains" (default).
+#' Alternative way to control search with out using regular expressions.
+#' @param print.labels : (TRUE) whether to print the metadata (i.e. variable names, labels and categories)
+#' of selected variables in the console.
+#' @param to.data.frame : (FALSE; only used when `print.labels=TRUE`) whether to return a
+#' dataframe containing the metadata of selected variables.
 #'
-#' @return Column names in `data` that contain `pref`.
+#' @return Prints column names in `data` that contain `pref` (and their labels and categories if print.labels==TRUE).
 #' @export
 #'
-#' @examples find_alspac('f01', toy_data) # Specify the data.frame name yourself
+#' @examples find_var('f01', toy_data) # Specify the data.frame name yourself
 
-find_alspac <- function(pref, data=NULL) {
+find_var <- function(s, data=NULL, method='contains', print.labels=TRUE, to.data.frame=FALSE) {
   # Check input
   if (base::is.null(data) &
       !base::exists('data', where=base::globalenv(), mode='list', inherits=FALSE)) {
@@ -23,18 +29,104 @@ find_alspac <- function(pref, data=NULL) {
 
     data <- get("data", envir = .GlobalEnv) # get `data` from global enviroment
   }
-  # Output: names in alphabetical order
-  var.names <- sort(names(data)[grep(pref, names(data))])
 
-  return(var.names)
+  if (method=='starts') { s <- paste0('^',s)
+  } else if (method=='ends') { s <- paste0(s,'$') }
+
+  # Output: names in alphabetical order
+  var.names <- sort(names(data)[grep(s, names(data))])
+
+  # Print labels
+  if (print.labels) {
+    if (all(names(data) == base::tolower(names(data)))) {
+      # Lowercase also the names in the metadata file
+      alspac_metadata$name <- base::tolower(alspac_metadata$name)
+    }
+    # Identify variables in the set that do not have metadata and add them as empty rows.
+    no_label <- setdiff(var.names, alspac_metadata$name)
+    if (length(no_label) > 0) {
+      no_label_rows <- data.frame('name'=no_label,
+                                  'lab'=rep('',length(no_label)),
+                                  'cat1'=rep(NA,length(no_label)),
+                                  'cat2'=rep(NA,length(no_label)))
+      alspac_metadata <- rbind(alspac_metadata, no_label_rows)
+    }
+
+    # Subset metadata
+    meta <- alspac_metadata[alspac_metadata$name %in% var.names, ]
+    row.names(meta) <- NULL
+    # Return dataframe or print to console
+    if (to.data.frame) { return(meta) } else { print(meta) }
+
+  } else { return(var.names) }
+
 }
 
-#' @rdname find_alspac
-#' @examples f('f01', toy_data)
+#' @rdname find_var
+#' @examples fv('f01', toy_data)
 #' @examples data <- toy_data
-#' f('f01') # Assumes data is stored in a data.frame called "data"
+#' fv('f01') # Assumes data is stored in a data.frame called "data"
 #' @export
-f <- find_alspac
+fv <- find_var
+
+# ------------------------------------------------------------------------------
+#' Search the variable labels are in the dataset.
+#'
+#' This function helps searching through the sea of concepts and measurements available
+#' (based on variable labels).
+#'
+#' @param s : partial string to search for (understands regular expressions).
+#' @param data : (NULL) allows to specify the name of the dataset if this is
+#' different than "data".
+#' @param case.sensitive : (FALSE) whther search should be case sensitive.
+#' @param to.data.frame : (FALSE) whether to return a
+#' dataframe containing the metadata of selected variables.
+#'
+#' @return Prints variable names and labels that match the search.
+#' @export
+#'
+#' @examples find_lab('income')
+#' @examples find_lab('PREG', case.sensitive=TRUE)
+
+find_lab <- function(s, data=NULL, case.sensitive=FALSE, to.data.frame=FALSE) {
+  # Check input
+  if (base::is.null(data) &
+      !base::exists('data', where=base::globalenv(), mode='list', inherits=FALSE)) {
+
+    message('No dataset specified. Searching among all ALSPAC variables (but keep in mind that some may not be available to you)')
+
+    # Output
+    meta <- alspac_metadata[grep(s, alspac_metadata$lab, ignore.case = !case.sensitive), ]
+    row.names(meta) <- NULL
+
+    return(meta)
+
+  } else if (base::is.null(data)) {
+
+    data <- get("data", envir = .GlobalEnv) # get `data` from global enviroment
+  }
+
+  # Remove metadata for variables not in the set
+  alspac_metadata <- alspac_metadata[alspac_metadata$name %in% names(data), ]
+
+  meta <- alspac_metadata[grep(s, alspac_metadata$lab, ignore.case = !case.sensitive), ]
+  row.names(meta) <- NULL
+
+  # Return dataframe or print to console
+  if (to.data.frame) {
+    return(meta)
+
+  } else {
+    print(meta)
+    return(meta$name)
+  }
+
+}
+
+#' @rdname find_lab
+#' @examples fl('insulin')
+#' @export
+fl <- find_lab
 
 # ------------------------------------------------------------------------------
 #' Quickly select groups of variables
@@ -53,10 +145,10 @@ f <- find_alspac
 #'
 #' @examples
 #'\dontrun{
-#' select_alspac('depre') # returns, for example c('depre_1','depre_2','depre_3','depresion_total')
-#' select_alspac('depre', times=c(1,3)) # returns, for example c('depre_1','depre_3')
+#' select_var('depre') # returns, for example c('depre_1','depre_2','depre_3','depresion_total')
+#' select_var('depre', times=c(1,3)) # returns, for example c('depre_1','depre_3')
 #'}
-select_alspac <- function(var.names, times=NULL, sep='_', data=NULL){
+select_var <- function(var.names, times=NULL, sep='_', data=NULL){
   # Check input
   if (base::is.null(data) &
       !base::exists('data', where=base::globalenv(), mode='list', inherits=FALSE)) {
@@ -75,10 +167,10 @@ select_alspac <- function(var.names, times=NULL, sep='_', data=NULL){
   return(subs)
 }
 
-#' @rdname select_alspac
+#' @rdname select_var
 #' @examples
 #'\dontrun{
 #'sel('alcohol', times=c(18, 24.5)) # returns c('alcohol_18years','alcohol_24.5years')
 #'}
 #' @export
-sel <- select_alspac
+sel <- select_var

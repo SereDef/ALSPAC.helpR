@@ -16,7 +16,7 @@ A data frame with 5 rows and 3 columns:
 }
 }
 \source{
-'{created inhouse to serve as example}
+'{created inhouse to serve as example}'
 }
 \usage{
 toy_data

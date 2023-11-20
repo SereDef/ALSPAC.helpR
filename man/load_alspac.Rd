@@ -4,12 +4,16 @@
 \alias{load_alspac}
 \title{Load the .sav file into R data frame.}
 \usage{
-load_alspac(filepath = NULL, lower.case = TRUE)
+load_alspac(filepath = NULL, lower.case = TRUE, load.metadata = FALSE)
 }
 \arguments{
 \item{filepath}{: (NULL) the full path of the \code{.sav} file containing the data.}
 
 \item{lower.case}{: (TRUE) whether column names should be lower-cased.}
+
+\item{load.metadata}{: (FALSE) whether to also load the metadata file (e.g. variable labels)
+explicitly. If TRUE a dataframe called "metadata" is created in your global environment.
+By default, metadata is only used in the background for the exploring functions.}
 }
 \value{
 An R data.frame with variables as columns and observations as rows.
@@ -20,4 +24,11 @@ the file's location. Select the correct file and hit \code{Select}. Alternativel
 you can specify the file full path as a string.
 By default, the column names of the output data.frame are lower-cased to
 avoid confusion.
+}
+\examples{
+\dontrun{
+load_alspac()
+load_alspac(lower.case=FALSE) # Keep original variable names
+load_alspac('~/ALSPAC_data_folder/ProjectName_DateRelease.sav')
+}
 }
