@@ -4,12 +4,20 @@
 \alias{load_alspac}
 \title{Load the .sav file into R data frame.}
 \usage{
-load_alspac(filepath = NULL, lower.case = TRUE, load.metadata = FALSE)
+load_alspac(
+  filepath = NULL,
+  lower.case = TRUE,
+  keep.value.labels = TRUE,
+  load.metadata = FALSE
+)
 }
 \arguments{
 \item{filepath}{: (NULL) the full path of the \code{.sav} file containing the data.}
 
 \item{lower.case}{: (TRUE) whether column names should be lower-cased.}
+
+\item{keep.value.labels}{: (TRUE) mantain the string levels of factors. This is
+internally calls \code{foreign::read.spss(..., use.value.labels=TRUE)}.}
 
 \item{load.metadata}{: (FALSE) whether to also load the metadata file (e.g. variable labels)
 explicitly. If TRUE a dataframe called "metadata" is created in your global environment.

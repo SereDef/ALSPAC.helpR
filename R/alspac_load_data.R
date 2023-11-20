@@ -9,6 +9,8 @@
 #'
 #' @param filepath : (NULL) the full path of the `.sav` file containing the data.
 #' @param lower.case : (TRUE) whether column names should be lower-cased.
+#' @param keep.value.labels : (TRUE) mantain the string levels of factors. This is
+#' internally calls `foreign::read.spss(..., use.value.labels=TRUE)`.
 #' @param load.metadata : (FALSE) whether to also load the metadata file (e.g. variable labels)
 #' explicitly. If TRUE a dataframe called "metadata" is created in your global environment.
 #' By default, metadata is only used in the background for the exploring functions.
@@ -22,14 +24,16 @@
 #' load_alspac(lower.case=FALSE) # Keep original variable names
 #' load_alspac('~/ALSPAC_data_folder/ProjectName_DateRelease.sav')
 #'}
-load_alspac <- function(filepath=NULL, lower.case=TRUE, load.metadata=FALSE) {
+load_alspac <- function(filepath=NULL, lower.case=TRUE, keep.value.labels=TRUE,
+                        load.metadata=FALSE) {
   # File location
   if (is.null(filepath)) { filepath <- base::file.choose() }
   # datapath <- base::dirname(filepath)
 
   # Load the file
   message('Loading: ',filepath,' ...')
-  full <- foreign::read.spss(filepath, use.value.labels=FALSE,
+  full <- foreign::read.spss(filepath,
+                             use.value.labels=keep.value.labels,
                              to.data.frame=TRUE)
   cat('Done!', base::nrow(full),' observations of ', base::ncol(full), ' variables.\n')
 
