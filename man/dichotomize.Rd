@@ -25,3 +25,13 @@ A data.frame with dichotomized variables
 \description{
 Dichotomize (and rename) groups of variables
 }
+\examples{
+\dontrun{
+LE <- dichotomize(
+ vars = data.frame('b570'='partner_died', 'b571'='child_died'),
+ yes = c('affected a lot','fairly affected','mildly affected','N effect at all'),
+ no = c('No')
+ )
+}
+
+}

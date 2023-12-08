@@ -14,7 +14,7 @@
 #' @examples
 #' \dontrun{
 #' LE <- dichotomize(
-#'  vars = data.frame('b570'='partner_died', b571'='child_died'),
+#'  vars = data.frame('b570'='partner_died', 'b571'='child_died'),
 #'  yes = c('affected a lot','fairly affected','mildly affected','N effect at all'),
 #'  no = c('No')
 #'  )
@@ -95,7 +95,7 @@ dichotomize <- function(vars, yes = c('1'), no = c('0'), verbose=TRUE, data=NULL
 #' @examples
 #' \dontrun{
 #' np <- dichotomize_cont(
-#'   vars=data.frame('g496'='neighbourhood_problems_21m', h366'='neighbourhood_problems_3y'),
+#'   vars=data.frame('g496'='neighbourhood_problems_21m', 'h366'='neighbourhood_problems_3y'),
 #    rule='>= .8',
 #'   quantile=TRUE)
 #'}

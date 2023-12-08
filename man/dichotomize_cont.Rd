@@ -32,3 +32,10 @@ A data.frame with dichotomized variables
 \description{
 Dichotomize (and rename) groups of continuous variables
 }
+\examples{
+\dontrun{
+np <- dichotomize_cont(
+  vars=data.frame('g496'='neighbourhood_problems_21m', 'h366'='neighbourhood_problems_3y'),
+  quantile=TRUE)
+}
+}
