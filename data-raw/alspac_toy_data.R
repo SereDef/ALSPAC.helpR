@@ -18,6 +18,8 @@ for (c in sort(sample(names(data)[-c(1,2)], 498))) {
   alspac_toy_data[,c] <- sample(data[,c], 500, replace=TRUE)
 }
 
+# haven::write_sav(alspac_toy_data, './inst/tutorial/alspac_toy_data.sav')
+
 usethis::use_data(alspac_toy_data, overwrite = TRUE)
 
 # Check non-ASCII ======================================

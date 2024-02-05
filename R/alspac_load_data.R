@@ -49,10 +49,14 @@ load_alspac <- function(filepath=NULL, lower.case=TRUE, keep.value.labels=TRUE,
   # Identify variables in the set that do not have metadata and add them as empty rows.
   no_label <- setdiff(names(full), alspac_metadata$name)
   if (length(no_label) > 0) {
+    filler <- rep(NA,length(no_label))
     no_label_rows <- data.frame('name'=no_label,
-                                'lab'=rep('',length(no_label)),
-                                'cat1'=rep(NA,length(no_label)),
-                                'cat2'=rep(NA,length(no_label)))
+                                 'lab'=rep('',length(no_label)),
+                                'cat1'=filler,
+                                'cat2'=filler,
+                          'median_age'=filler,
+                           'age_range'=filler,
+                        'age_variable'=filler)
     alspac_metadata <- rbind(alspac_metadata, no_label_rows)
   }
 

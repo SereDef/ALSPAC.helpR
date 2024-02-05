@@ -1,0 +1,81 @@
+---
+title: "ALSPAC.helpR_tutorial"
+author: "Serena Defina"
+date: "`r Sys.Date()`"
+output: pdf_document
+editor_options: 
+  markdown: 
+    wrap: 90
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Hey,
+
+This tiny tutorial is to help you get started with
+[**`ALSPAC.helpR`**](https://github.com/SereDef/ALSPAC.helpR). The package collects a few
+small functions to load, clean, and manipulate datasets that may come in handy when
+working with ALSPAC data.
+
+## Installation
+
+You can install the development version of **`ALSPAC.helpR`** from
+[GitHub](https://github.com/) with:
+
+```{r}
+# install.packages("devtools")
+devtools::install_github("SereDef/ALSPAC.helpR")
+
+# Lets load it up 
+library(ALSPAC.helpR)
+```
+
+## 1. Load the data
+
+First thing you usually need to do is *read* the dataset in memory. So meet our first
+function: **`load_alspac()`** that can do a few useful things: - reads .sav format - about
+15.500 rows and maybe also loads of columns (takes a second)
+
+```{r, eval=F, echo=T}
+?load_alspac
+
+data <- load_alspac() # Opens interactive window to choose file
+# Note: by default, the function transforms all variable names to lowercase (set lower.case=FALSE if this is not desired)
+```
+
+## Explore dataset
+
+```{r, eval=F, echo=T}
+# Find all variables in "data" whose names start with "f01"
+find_var('f01',  method='starts')
+# OR, to save some typing 
+fv('f01',  method='starts')
+
+# Find all the variable labels that mention "income"
+find_lab('income')
+# OR, to save some typing 
+fl('income')
+
+# Seelect some variables
+select_var('depre', times=c(1,3)) # returns, for example c('depre_1','depre_3')
+# OR, to save some typing 
+sel('depre')
+
+```
+
+## Clean dataset
+
+```{r, eval=F, echo=T}
+# Create unique identifier
+data$IDC <- make_idc(mom.id='id123') 
+# Create sex factor
+data$sex <- make_sex_factor()
+
+# Remove one of the sibling couple randomly
+data_nosibl <- rm_siblings(method='random')
+
+# Remove outliers 
+data$horses <- rm_outliers('unicorns', cutoff=3.5)
+```
