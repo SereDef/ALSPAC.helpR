@@ -9,7 +9,7 @@ rm_siblings(
   method = "random",
   column_selection = "all",
   seed = 310896,
-  mom.id = "cidb2957",
+  mom.id = "cidb1234",
   parity = "qlet",
   data = NULL
 )
@@ -47,8 +47,9 @@ and takes values: "random", "parity" and "missing" (see parameter description
 for more details).
 }
 \examples{
-\dontrun{
+data <- ALSPAC.helpR::alspac_toy_data
 data_nosibl <- rm_siblings(idc='IDC') # Assumes a dataset called "data"
+\dontrun{
 data_nosibl <- rm_siblings(idc='new_ID', data=toy_data)
 data_nosibl <- rm_siblings(method='missing', column_selection=c('poteto','potato'))
 }

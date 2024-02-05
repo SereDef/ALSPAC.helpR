@@ -15,7 +15,7 @@ fl(s, data = NULL, case.sensitive = FALSE, to.data.frame = FALSE)
 \item{data}{: (NULL) allows to specify the name of the dataset if this is
 different than "data".}
 
-\item{case.sensitive}{: (FALSE) whther search should be case sensitive.}
+\item{case.sensitive}{: (FALSE) whether search should be case sensitive.}
 
 \item{to.data.frame}{: (FALSE) whether to return a
 dataframe containing the metadata of selected variables.}

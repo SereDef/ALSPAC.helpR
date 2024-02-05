@@ -4,7 +4,7 @@
 \alias{make_idc}
 \title{Make a unique child identifier}
 \usage{
-make_idc(mom.id = "cidb2957", parity = "qlet", data = NULL)
+make_idc(mom.id = "cidb1234", parity = "qlet", data = NULL)
 }
 \arguments{
 \item{mom.id}{: The variable name of the (project specific) mother ID.}
@@ -23,8 +23,9 @@ The ALSPAC datasets often lack a unique participant identifier. So let's make
 one using information about the mother and sibling status.
 }
 \examples{
-data <- toy_data
-data$IDC <- make_idc(mom.id='id') # Assumes data is stored in a data.frame called "data"
-data$IDC <- make_idc(mom.id='id', data=toy_data) # Specify the data.frame name yourself
+data <- ALSPAC.helpR::alspac_toy_data
+data$IDC <- make_idc(mom.id='cidb1234') # Assumes data is stored in a data.frame called "data"
+other_data <- data
+other_data$IDC <- make_idc(data=other_data) # Specify the data.frame name yourself
 
 }

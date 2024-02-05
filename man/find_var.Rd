@@ -44,8 +44,8 @@ ALSPAC data likely comes in large dataframes containing many columns.
 This function helps with quickly finding out which variables are present.
 }
 \examples{
-find_var('f01', toy_data) # Specify the data.frame name yourself
-fv('f01', toy_data)
-data <- toy_data
-fv('f01') # Assumes data is stored in a data.frame called "data"
+find_var('c2', ALSPAC.helpR::alspac_toy_data) # Specify the data.frame name yourself
+fv('^c2', ALSPAC.helpR::alspac_toy_data)
+data <- ALSPAC.helpR::alspac_toy_data
+fv('^c2') # Assumes data is stored in a data.frame called "data"
 }

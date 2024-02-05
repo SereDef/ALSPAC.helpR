@@ -19,8 +19,8 @@ A factor with levels: 'male' and 'female'.
 Make a factor with levels 'male' and 'female' from character vector.
 }
 \examples{
-data <- toy_data
+\dontrun{
 data$sex <- make_sex_factor() # Assumes data is stored in a data.frame called "data"
-data$sex <- make_sex_factor(data=toy_data) # Specify the data.frame name yourself
-
+other_data$sex <- make_sex_factor(data=other_data) # Specify the data.frame name yourself
+}
 }

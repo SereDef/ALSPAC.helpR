@@ -34,6 +34,7 @@ ccei_score <- function(sev1, sev2, sev3, asnumeric=FALSE, verbose = TRUE, data =
   }
 
   if (!base::exists('metadata', where=base::globalenv(), inherits=FALSE)) {
+    alspac_metadata <- ALSPAC.helpR::alspac_metadata
     metadata <- alspac_metadata[alspac_metadata$name %in% names(data), ]
   }
 
@@ -105,6 +106,7 @@ epds_score <- function(set, revset, asnumeric=FALSE, verbose = TRUE, data = NULL
   }
 
   if (!base::exists('metadata', where=base::globalenv(), inherits=FALSE)) {
+    alspac_metadata <- ALSPAC.helpR::alspac_metadata
     metadata <- alspac_metadata[alspac_metadata$name %in% names(data), ]
   }
 

@@ -24,7 +24,6 @@ The cleaned variable (with outlier values set to NA)
 This function sets all values that are outside the range specified to NA.
 }
 \examples{
-toy_data$coolio <- rm_outliers('yikes123', data=toy_data)
 \dontrun{
 data$cheese_clean <- rm_outliers('cheese')
 data$unicorn <- rm_outliers('horses', cutoff=5, verbose=FALSE)

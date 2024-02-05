@@ -5,3 +5,4 @@
 ^LICENSE\.md$
 inst
 ^README\.Rmd$
+^data-raw$

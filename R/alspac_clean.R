@@ -12,11 +12,12 @@
 #' 0 (for first born) or 1 (for second born)
 #' @export
 #'
-#' @examples data <- toy_data
-#' data$IDC <- make_idc(mom.id='id') # Assumes data is stored in a data.frame called "data"
-#' @examples data$IDC <- make_idc(mom.id='id', data=toy_data) # Specify the data.frame name yourself
+#' @examples data <- ALSPAC.helpR::alspac_toy_data
+#' data$IDC <- make_idc(mom.id='cidb1234') # Assumes data is stored in a data.frame called "data"
+#' @examples other_data <- data
+#' other_data$IDC <- make_idc(data=other_data) # Specify the data.frame name yourself
 #'
-make_idc <- function(mom.id='cidb2957', parity='qlet', data=NULL) {
+make_idc <- function(mom.id='cidb1234', parity='qlet', data=NULL) {
   # Check input
   if (base::is.null(data) &
       !base::exists('data', where=base::globalenv(), mode='list', inherits=FALSE)) {
@@ -44,10 +45,11 @@ make_idc <- function(mom.id='cidb2957', parity='qlet', data=NULL) {
 #' @return A factor with levels: 'male' and 'female'.
 #' @export
 #'
-#' @examples data <- toy_data
+#' @examples
+#' \dontrun{
 #' data$sex <- make_sex_factor() # Assumes data is stored in a data.frame called "data"
-#' @examples data$sex <- make_sex_factor(data=toy_data) # Specify the data.frame name yourself
-#'
+#' other_data$sex <- make_sex_factor(data=other_data) # Specify the data.frame name yourself
+#'}
 make_sex_factor <- function(sex.var='kz021', data=NULL) {
   # Check input
   if (base::is.null(data) &
@@ -95,15 +97,15 @@ make_sex_factor <- function(sex.var='kz021', data=NULL) {
 #' @return A dataframe where only one sibling is left for each pair.
 #' @export
 #'
-#' @examples
-#'\dontrun{
+#' @examples data <- ALSPAC.helpR::alspac_toy_data
 #' data_nosibl <- rm_siblings(idc='IDC') # Assumes a dataset called "data"
+#'\dontrun{
 #' data_nosibl <- rm_siblings(idc='new_ID', data=toy_data)
 #' data_nosibl <- rm_siblings(method='missing', column_selection=c('poteto','potato'))
 #'}
 #'
 rm_siblings <- function(idc='idc', method = 'random', column_selection = 'all',
-                        seed = 310896, mom.id='cidb2957', parity='qlet',
+                        seed = 310896, mom.id='cidb1234', parity='qlet',
                         data=NULL) {
   # Check input
   if (base::is.null(data) &
@@ -196,7 +198,6 @@ rm_siblings <- function(idc='idc', method = 'random', column_selection = 'all',
 #' @return The cleaned variable (with outlier values set to NA)
 #' @export
 #'
-#' @examples toy_data$coolio <- rm_outliers('yikes123', data=toy_data)
 #' @examples
 #'\dontrun{
 #' data$cheese_clean <- rm_outliers('cheese')

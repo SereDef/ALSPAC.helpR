@@ -34,6 +34,7 @@ dichotomize <- function(vars, yes = c('1'), no = c('0'), verbose=TRUE, data=NULL
   }
 
   if (!base::exists('metadata', where=base::globalenv(), inherits=FALSE)) {
+    alspac_metadata <- ALSPAC.helpR::alspac_metadata
     metadata <- alspac_metadata[alspac_metadata$name %in% names(data), ]
   }
 
@@ -113,6 +114,7 @@ dichotomize_cont <- function(vars, rule = '', quantile=FALSE, verbose=TRUE, data
   }
 
   if (!base::exists('metadata', where=base::globalenv(), inherits=FALSE)) {
+    alspac_metadata <- ALSPAC.helpR::alspac_metadata
     metadata <- alspac_metadata[alspac_metadata$name %in% names(data), ]
   }
 

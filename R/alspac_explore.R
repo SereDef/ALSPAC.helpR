@@ -16,7 +16,7 @@
 #' @return Prints column names in `data` that contain `pref` (and their labels and categories if print.labels==TRUE).
 #' @export
 #'
-#' @examples find_var('f01', toy_data) # Specify the data.frame name yourself
+#' @examples find_var('c2', ALSPAC.helpR::alspac_toy_data) # Specify the data.frame name yourself
 
 find_var <- function(s, data=NULL, method='contains', print.labels=TRUE, to.data.frame=FALSE) {
   # Check input
@@ -63,9 +63,9 @@ find_var <- function(s, data=NULL, method='contains', print.labels=TRUE, to.data
 }
 
 #' @rdname find_var
-#' @examples fv('f01', toy_data)
-#' @examples data <- toy_data
-#' fv('f01') # Assumes data is stored in a data.frame called "data"
+#' @examples fv('^c2', ALSPAC.helpR::alspac_toy_data)
+#' @examples data <- ALSPAC.helpR::alspac_toy_data
+#' fv('^c2') # Assumes data is stored in a data.frame called "data"
 #' @export
 fv <- find_var
 
@@ -78,7 +78,7 @@ fv <- find_var
 #' @param s : partial string to search for (understands regular expressions).
 #' @param data : (NULL) allows to specify the name of the dataset if this is
 #' different than "data".
-#' @param case.sensitive : (FALSE) whther search should be case sensitive.
+#' @param case.sensitive : (FALSE) whether search should be case sensitive.
 #' @param to.data.frame : (FALSE) whether to return a
 #' dataframe containing the metadata of selected variables.
 #'
