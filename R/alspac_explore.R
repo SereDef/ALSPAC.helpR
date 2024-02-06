@@ -45,10 +45,14 @@ find_var <- function(s, data=NULL, method='contains', print.labels=TRUE, to.data
     # Identify variables in the set that do not have metadata and add them as empty rows.
     no_label <- setdiff(var.names, alspac_metadata$name)
     if (length(no_label) > 0) {
+      filler <- rep(NA,length(no_label))
       no_label_rows <- data.frame('name'=no_label,
                                   'lab'=rep('',length(no_label)),
-                                  'cat1'=rep(NA,length(no_label)),
-                                  'cat2'=rep(NA,length(no_label)))
+                                  'cat1'=filler,
+                                  'cat2'=filler,
+                                  'median_age'=filler,
+                                  'age_range'=filler,
+                                  'age_variable'=filler)
       alspac_metadata <- rbind(alspac_metadata, no_label_rows)
     }
 
