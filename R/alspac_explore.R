@@ -34,11 +34,11 @@ find_var <- function(s, data=NULL, method='contains', print.labels=TRUE, to.data
   } else if (method=='ends') { s <- paste0(s,'$') }
 
   # Output: names in alphabetical order
-  var.names <- sort(names(data)[grep(s, names(data))])
+  var.names <- sort(names(data)[grep(s, names(data), ignore.case = TRUE)])
 
   # Print labels
   if (print.labels) {
-    if (all(names(data) == base::tolower(names(data)))) {
+    if (all(var.names == base::tolower(var.names))) {
       # Lowercase also the names in the metadata file
       alspac_metadata$name <- base::tolower(alspac_metadata$name)
     }
@@ -57,7 +57,7 @@ find_var <- function(s, data=NULL, method='contains', print.labels=TRUE, to.data
     }
 
     # Subset metadata
-    meta <- alspac_metadata[alspac_metadata$name %in% var.names, ]
+    meta <- alspac_metadata[grepl(var.names, alspac_metadata$name, ignore.case = TRUE), ]
     row.names(meta) <- NULL
     # Return dataframe or print to console
     if (to.data.frame) { return(meta) } else { print(meta) }
