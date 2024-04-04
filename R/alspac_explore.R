@@ -19,19 +19,28 @@
 #' @examples find_var('c2', ALSPAC.helpR::alspac_toy_data) # Specify the data.frame name yourself
 
 find_var <- function(s, data=NULL, method='contains', print.labels=TRUE, to.data.frame=FALSE) {
+
+  # Adjust regex based on method input
+  if (method=='starts') { s <- paste0('^',s)
+  } else if (method=='ends') { s <- paste0(s,'$') }
+
   # Check input
   if (base::is.null(data) &
       !base::exists('data', where=base::globalenv(), mode='list', inherits=FALSE)) {
 
-    base::stop('Specify the dataset name, if this is different from "data"')
+    base::message('ATTENTION: You did not specify a dataset!
+                  Searching among all ALSPAC variables (but keep in mind that some
+                  may not be available to you)')
+
+    meta <- alspac_metadata[grepl(s, alspac_metadata$name, ignore.case = TRUE), ]
+    row.names(meta) <- NULL
+    # Return dataframe or print to console
+    return(meta)
 
   } else if (base::is.null(data)) {
 
     data <- get("data", envir = .GlobalEnv) # get `data` from global enviroment
   }
-
-  if (method=='starts') { s <- paste0('^',s)
-  } else if (method=='ends') { s <- paste0(s,'$') }
 
   # Output: names in alphabetical order
   var.names <- sort(names(data)[grep(s, names(data), ignore.case = TRUE)])
