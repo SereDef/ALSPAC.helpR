@@ -47,12 +47,9 @@ find_var <- function(s, data=NULL, method='contains', print.labels=TRUE, to.data
 
   # Print labels
   if (print.labels) {
-    if (all(var.names == base::tolower(var.names))) {
-      # Lowercase also the names in the metadata file
-      alspac_metadata$name <- base::tolower(alspac_metadata$name)
-    }
+    # Lowercase also the names in the metadata file
     # Identify variables in the set that do not have metadata and add them as empty rows.
-    no_label <- setdiff(var.names, alspac_metadata$name)
+    no_label <- setdiff(base::tolower(var.names), base::tolower(alspac_metadata$name))
     if (length(no_label) > 0) {
       filler <- rep(NA,length(no_label))
       no_label_rows <- data.frame('name'=no_label,
@@ -66,7 +63,8 @@ find_var <- function(s, data=NULL, method='contains', print.labels=TRUE, to.data
     }
 
     # Subset metadata
-    meta <- alspac_metadata[grepl(var.names, alspac_metadata$name, ignore.case = TRUE), ]
+    meta <- alspac_metadata[grepl(paste(var.names, collapse='|'),
+                                  alspac_metadata$name, ignore.case = TRUE), ]
     row.names(meta) <- NULL
     # Return dataframe or print to console
     if (to.data.frame) { return(meta) } else { print(meta) }
