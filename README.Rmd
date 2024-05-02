@@ -28,7 +28,7 @@ This is a quick tutorial to help you get started with **`ALSPAC.helpR`**.
 You can install the development version of **`ALSPAC.helpR`** from
 [GitHub](https://github.com/) with:
 
-```{r}
+```{r, eval = FALSE}
 # install.packages("devtools")
 devtools::install_github("SereDef/ALSPAC.helpR")
 

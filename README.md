@@ -23,22 +23,7 @@ You can install the development version of **`ALSPAC.helpR`** from
 ``` r
 # install.packages("devtools")
 devtools::install_github("SereDef/ALSPAC.helpR")
-```
 
-    ## Downloading GitHub repo SereDef/ALSPAC.helpR@HEAD
-
-    ## ── R CMD build ─────────────────────────────────────────────────────────────────
-    ## * checking for file ‘/private/var/folders/f9/fknlq25n23l74zmhg8zbckx80000gn/T/Rtmpep069H/remotes44dd11fe80d/SereDef-ALSPAC.helpR-ffd5d78/DESCRIPTION’ ... OK
-    ## * preparing ‘ALSPAC.helpR’:
-    ## * checking DESCRIPTION meta-information ... OK
-    ## * checking for LF line-endings in source and make files and shell scripts
-    ## * checking for empty or unneeded directories
-    ## * building ‘ALSPAC.helpR_0.0.0.9000.tar.gz’
-
-    ## Installing package into '/private/var/folders/f9/fknlq25n23l74zmhg8zbckx80000gn/T/Rtmp0wP3wT/temp_libpath4253325f5ed'
-    ## (as 'lib' is unspecified)
-
-``` r
 # Lets load it up 
 library(ALSPAC.helpR)
 ```
