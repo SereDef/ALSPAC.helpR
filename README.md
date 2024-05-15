@@ -56,7 +56,7 @@ things:
 data <- load_alspac( # filepath = NULL, 
   lower.case = TRUE,
   keep.value.labels = TRUE,
-  load.metadata = TRUE
+  load.metadata = FALSE
 )
 ```
 
@@ -65,7 +65,7 @@ data <- load_alspac( # filepath = NULL,
 This is just a dataframe taken from the ALSPAC website (aka what you see
 on the [variable search
 tool](https://variables.alspac.bris.ac.uk/?_gl=1*1il3dnn*_ga*NzkyNjg3OTQ3LjE3MDcyMTY2ODA.*_ga_6R8SPL3HLT*MTcwNzIxNjY4MC4xLjAuMTcwNzIxNjY4MC42MC4wLjA.&_ga=2.28553148.1407887277.1707216680-792687947.1707216680))
-whith some additional information included in it (e.g. age at
+with some additional information included in it (e.g. age at
 measurement). The package uses this file in the background, but you can
 also load it in memory if you wish.
 
@@ -109,7 +109,7 @@ the dataset through two functions: **`find_var()`** and **`find_lab()`**
 # Find all variables names in "data" whose names start with "c2"
 find_var('c2', 
          # data = data,
-         method='starts', 
+         method='contains', 
          print.labels = TRUE,
          to.data.frame = FALSE)
 ```

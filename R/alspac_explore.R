@@ -63,7 +63,7 @@ find_var <- function(s, data=NULL, method='contains', print.labels=TRUE, to.data
     }
 
     # Subset metadata
-    meta <- alspac_metadata[grepl(paste(var.names, collapse='|'),
+    meta <- alspac_metadata[grepl(paste0('^', paste(var.names, collapse='$|^'),'$'),
                                   alspac_metadata$name, ignore.case = TRUE), ]
     row.names(meta) <- NULL
     # Return dataframe or print to console
